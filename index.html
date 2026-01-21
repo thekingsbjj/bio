@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Kings Academy - Oficial</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Teko:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET GERAL --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #f0f2f5;
+            background-image: linear-gradient(to bottom, rgba(245, 245, 245, 0.92), rgba(245, 245, 245, 0.98)), 
+                              url('https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?q=80&w=1470&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: 'Roboto', sans-serif;
+            color: #2d3436;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+
+        /* --- LOGO --- */
+        .logo-img {
+            width: 130px; height: 130px; border-radius: 50%;
+            border: 4px solid #f37d1d; /* Borda Laranja */
+            object-fit: cover; background: #fff;
+            margin: 15px auto 15px auto; display: block;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* --- CABEÇALHO --- */
+        h1 { font-family: 'Teko', sans-serif; font-size: 3rem; line-height: 1; margin-bottom: 5px; text-transform: uppercase; color: #1a1a1a; }
+        h1 span { color: #f37d1d; } /* Laranja */
+        p.subtitle { color: #636e72; font-size: 1rem; margin-bottom: 20px; font-weight: 500; letter-spacing: 0.5px; }
+
+        /* --- STATUS DA ACADEMIA --- */
+        .badge-container { margin-bottom: 20px; }
+        .badge {
+            display: inline-block; padding: 8px 18px;
+            background: #fff; border-radius: 30px;
+            font-size: 0.85rem; border: 1px solid #dcdcdc; font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+
+        /* --- ESTILO DOS BOTÕES (MENU) --- */
+        .menu-btn {
+            background: #ffffff; 
+            border: 1px solid #e0e0e0;
+            padding: 18px; margin-bottom: 14px; border-radius: 16px;
+            display: flex; align-items: center; justify-content: space-between;
+            cursor: pointer; text-decoration: none; color: #2d3436;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            position: relative; overflow: hidden;
+        }
+        
+        .menu-btn:hover { transform: translateY(-3px); border-color: #f37d1d; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .menu-btn:hover .icon-box i { transform: scale(1.2); color: #1a1a1a; }
+        
+        .btn-content { display: flex; align-items: center; gap: 15px; text-align: left; }
+        .icon-box { width: 30px; text-align: center; }
+        .icon-box i { color: #f37d1d; font-size: 1.4rem; transition: all 0.3s ease; }
+        
+        .btn-title { font-weight: 700; font-size: 1.05rem; color: #1a1a1a; display: block; }
+        .btn-desc { font-size: 0.8rem; color: #636e72; margin-top: 3px; display: block; }
+
+        /* BOTÃO DESTAQUE (AGENDAR) - Preto e Laranja */
+        .menu-btn.gold {
+            background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+            border: 2px solid #f37d1d;
+            animation: pulse-animation 2s infinite;
+        }
+        .menu-btn.gold .btn-title { color: #f37d1d; }
+        .menu-btn.gold .btn-desc { color: #ccc; }
+        .menu-btn.gold .icon-box i { color: #f37d1d; }
+
+        @keyframes pulse-animation {
+            0% { box-shadow: 0 0 0 0px rgba(243, 125, 29, 0.4); }
+            70% { box-shadow: 0 0 0 12px rgba(243, 125, 29, 0); }
+            100% { box-shadow: 0 0 0 0px rgba(243, 125, 29, 0); }
+        }
+
+        /* --- SUBMENUS --- */
+        .submenu {
+            display: none; background: #fff; border: 1px solid #eee; border-top: none;
+            border-radius: 0 0 16px 16px; margin-top: -18px; margin-bottom: 18px; text-align: left;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05); overflow: hidden;
+        }
+        .submenu.show { display: block; animation: slideDown 0.3s ease; }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- CARTÕES DE PREÇO --- */
+        .price-card { background: #fff; border: 1px solid #eee; border-radius: 12px; margin: 15px; overflow: hidden; }
+        .card-header { 
+            background: #1a1a1a; color: #fff; padding: 10px 15px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            font-weight: bold; font-size: 0.85rem; 
+        }
+        .price-row { padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; }
+        .price-val { font-size: 1.2rem; font-weight: 700; color: #1a1a1a; }
+        .tag-clube { color: #27ae60; font-weight: 800; font-size: 1.2rem; }
+
+        /* LISTAS DE DETALHES */
+        .details-list { padding: 15px; background: #f9f9f9; border-top: 1px solid #eee; }
+        .detail-item { font-size: 0.8rem; color: #444; margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px; line-height: 1.3; }
+        .detail-item i { color: #f37d1d; margin-top: 3px; font-size: 0.8rem; }
+
+        .legal-notice { padding: 15px; font-size: 0.7rem; color: #95a5a6; line-height: 1.4; border-top: 1px solid #eee; background: #fafafa; }
+
+        /* --- GRADE DE HORÁRIOS --- */
+        .day-header { 
+            padding: 10px 20px; font-size: 0.75rem; color: #888; 
+            font-weight: bold; background: #f1f2f6; border-bottom: 1px solid #e1e1e1; 
+            text-transform: uppercase;
+        }
+        .class-row {
+            display: flex; justify-content: space-between; padding: 12px 20px;
+            border-bottom: 1px solid #f1f1f1; font-size: 0.9rem; align-items: center;
+        }
+        .class-row .time { font-weight: 500; color: #2d3436; width: 60px; }
+        .class-row.active { border-left: 5px solid #2ecc71; background: rgba(46, 204, 113, 0.1); }
+        .class-row.active .time { color: #27ae60; font-weight: bold; }
+        .live-tag { display: none; background: #27ae60; color: #fff; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; font-weight: bold; text-transform: uppercase; }
+        .class-row.active .live-tag { display: inline-block; }
+
+        /* --- BOTÃO DE AÇÃO (CTA) --- */
+        .cta-btn { 
+            display: block; text-align: center; background: #27ae60; color: #fff; 
+            font-weight: bold; padding: 15px; border-radius: 12px; text-decoration: none; 
+            margin: 15px; text-transform: uppercase; font-size: 0.95rem; letter-spacing: 0.5px;
+            transition: background 0.3s;
+        }
+        .cta-btn:hover { background: #219150; }
+
+        /* --- FOOTER --- */
+        footer { margin-top: 40px; color: #aaa; font-size: 0.8rem; }
+        .socials a { color: #1a1a1a; font-size: 1.8rem; margin: 0 12px; text-decoration: none; transition: 0.3s; }
+        .socials a:hover { color: #f37d1d; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <img src="https://cdn-icons-png.flaticon.com/512/185/185026.png" alt="Logo The Kings" class="logo-img" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3232/3232761.png'">
+        
+        <div class="badge-container">
+            <div class="badge">
+                <span class="dot"></span> <span id="status-text">Carregando status...</span>
+            </div>
+        </div>
+
+        <h1>The Kings <span>Academy</span></h1>
+        <p class="subtitle">Excelência em Artes Marciais</p>
+
+        <div class="links-group">
+            
+            <a href="https://wa.me/5511951945648?text=Olá! Gostaria de agendar minha aula experimental gratuita." class="menu-btn gold">
+                <div class="btn-content">
+                    <div class="icon-box"><i class="fas fa-bolt"></i></div>
+                    <div>
+                        <span class="btn-title">Agendar Aula Experimental</span>
+                        <span class="btn-desc">Sua primeira aula é por nossa conta</span>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-right" style="color: #f37d1d"></i>
+            </a>
+
+            <div class="menu-btn" onclick="toggle('menu-planos')" style="border-left: 5px solid #f37d1d;">
+                <div class="btn-content">
+                    <div class="icon-box"><i class="fas fa-crown"></i></div>
+                    <div>
+                        <span class="btn-title">Nossos Planos</span>
+                        <span class="btn-desc">Planos válidos somente até dia 31/01/26</span>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div id="menu-planos" class="submenu">
+                
+                <div class="price-card">
+                    <div class="card-header"><span>PLANO PRATA</span> <small>1 Modalidade</small></div>
+                    <div class="price-row"><span>Mensal Pré-pago</span> <span class="price-val">R$ 179,90</span></div>
+                    <p style="padding: 0 15px 10px; font-size: 0.7rem; color: #d35400;">+ Taxa de Inscrição Obrigatória</p>
+                </div>
+
+                <div class="price-card">
+                    <div class="card-header"><span>PLANO PASSAPORTE</span> <small>Livre Acesso</small></div>
+                    <div class="price-row"><span>Mensal Pré-pago</span> <span class="price-val">R$ 199,90</span></div>
+                    <p style="padding: 0 15px 10px; font-size: 0.7rem; color: #d35400;">+ Taxa de Inscrição Obrigatória</p>
+                </div>
+
+                <div class="price-card" style="border: 2px solid #27ae60;">
+                    <div class="card-header" style="background: #27ae60;"><span>CLUBE+ (OFERTA ANUAL)</span></div>
+                    
+                    <div class="price-row" style="padding-bottom: 5px;">
+                        <span>Kids (4-13 anos)</span> 
+                        <span class="tag-clube">
+                            <small style="font-size:0.6rem; color:#555; font-weight:normal; display:block; text-align:right;">1 + 11x de</small> 
+                            R$ 79,90
+                        </span>
+                    </div>
+                    
+                    <div class="price-row" style="padding-top: 10px;">
+                        <span>Juvenil & Adulto</span> 
+                        <span class="tag-clube">
+                            <small style="font-size:0.6rem; color:#555; font-weight:normal; display:block; text-align:right;">1 + 11x de</small> 
+                            R$ 99,90
+                        </span>
+                    </div>
+                    
+                    <div style="background: #eefdf5; color: #27ae60; text-align: center; font-size: 0.7rem; padding: 5px; font-weight: bold; border-top: 1px solid #eee;">ISENTO DE TAXA DE INSCRIÇÃO</div>
+                </div>
+
+                <div class="details-list">
+                    <p style="font-weight: bold; font-size: 0.85rem; margin-bottom: 10px; color: #f37d1d;">Benefícios Exclusivos Clube+:</p>
+                    <div class="detail-item"><i class="fas fa-check"></i> <span><strong>12 Vouchers Amigo:</strong> Você ganha 1 voucher por mês para presentear um amigo com o mês inteiro de treino grátis.</span></div>
+                    <div class="detail-item"><i class="fas fa-check"></i> <span><strong>Passe Livre Total:</strong> Acesso a todas as modalidades.</span></div>
+                    <div class="detail-item"><i class="fas fa-check"></i> <span><strong>Trancamento:</strong> Direito a até 60 dias de férias/ano.</span></div>
+                    <div class="detail-item"><i class="fas fa-check"></i> <span><strong>Transferência:</strong> Pode transferir o plano para outra pessoa.</span></div>
+                </div>
+
+                <div class="legal-notice">
+                    • Todos os planos são <strong>pré-pagos</strong>.<br>
+                    • <strong>Regra do Voucher:</strong> O amigo presenteado só pode utilizar o benefício de treinar o mês inteiro uma única vez por ano.<br>
+                    • Planos mensais não permitem trancamento.<br>
+                    • Clube+ é um plano anual parcelado no cartão.
+                </div>
+                
+                <a href="https://wa.me/5511951945648?text=Quero+garantir+os+valores+de+2025" class="cta-btn">Garantir valores de 2025</a>
+            </div>
+
+            <div class="menu-btn" onclick="toggle('menu-grade')">
+                <div class="btn-content">
+                    <div class="icon-box"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <span class="btn-title">Grade de Horários</span>
+                        <span class="btn-desc">Confira as turmas e horários</span>
+                    </div>
+                </div>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div id="menu-grade" class="submenu">
+                
+                <div class="day-header">SEGUNDAS E QUARTAS</div>
+                <div class="class-row" data-d="1,3" data-h="8"><span class="time">08:00</span><span>JJ Kids</span><span class="live-tag">ROLANDO</span></div>
+                <div class="class-row" data-d="1,3" data-h="9"><span class="time">09:00</span><span>JJ Adulto</span><span class="live-tag">ROLANDO</span></div>
+                <div class="class-row" data-d="1,3" data-h="18"><span class="time">18:00</span><span>Muay Thai</span><span class="live-tag">ROLANDO</span></div>
+                <div class="class-row" data-d="1,3" data-h="19"><span class="time">19:00</span><span>JJ Kids</span><span class="live-tag">ROLANDO</span></div>
+                <div class="class-row" data-d="1,3" data-h="20"><span class="time">20:00</span><span>JJ Adulto</span><span class="live-tag">ROLANDO</span></div>
+                <div class="class-row" data-d="1,3" data-h="21"><span class="time">21:00</span><span>Boxe</span><span class="live-tag">ROLANDO</span></div>
+
+                <div class="day-header">TERÇAS E QUINTAS</div>
+                <div class="class-row" data-d="2,4" data-h="20"><span class="time">20:00</span><span>Muay Thai Kids</span><span class="live-tag">ROLANDO</span></div>
+                <div class="class-row" data-d="2,4" data-h="21"><span class="time">21:00</span><span>Muay Thai Adulto</span><span class="live-tag">ROLANDO</span></div>
+
+                <div class="day-header">SEXTA-FEIRA</div>
+                <div class="class-row" data-d="5" data-h="8"><span class="time">08:00</span><span>NoGi Kids</span><span class="live-tag">ROLANDO</span></div>
+                <div class="class-row" data-d="5" data-h="9"><span class="time">09:00</span><span>NoGi Adulto</span><span class="live-tag">ROLANDO</span></div>
+                <div class="class-row" data-d="5" data-h="18"><span class="time">18:00</span><span>Muay Thai</span><span class="live-tag">ROLANDO</span></div>
+                <div class="class-row" data-d="5" data-h="19"><span class="time">19:00</span><span>NoGi Kids</span><span class="live-tag">ROLANDO</span></div>
+                <div class="class-row" data-d="5" data-h="20"><span class="time">20:00</span><span>NoGi Adulto</span><span class="live-tag">ROLANDO</span></div>
+                <div class="class-row" data-d="5" data-h="21"><span class="time">21:00</span><span>Boxe</span><span class="live-tag">ROLANDO</span></div>
+            </div>
+
+            <a href="https://drive.google.com/drive/folders/163w9vgQTpDoezlB69J9eIFki2b7RdlIM" target="_blank" class="menu-btn" style="border-left: 5px solid #f37d1d;">
+                <div class="btn-content">
+                    <div class="icon-box"><i class="fas fa-shield-halved"></i></div>
+                    <div>
+                        <span class="btn-title">The Kings vs Bullying</span>
+                        <span class="btn-desc">Segurança Digital e Prevenção</span>
+                    </div>
+                </div>
+                <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.4;"></i>
+            </a>
+
+            <a href="https://share.google/i2RTrE1JGX7LeNSXG" target="_blank" class="menu-btn">
+                <div class="btn-content">
+                    <div class="icon-box"><i class="fas fa-map-location-dot"></i></div>
+                    <span class="btn-title">Localização</span>
+                </div>
+                <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.3;"></i>
+            </a>
+
+        </div>
+
+        <footer>
+            <div class="socials">
+                <a href="https://instagram.com/thekingskw" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/5511951945648" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p style="margin-top:20px;">© 2026 The Kings Academy</p>
+        </footer>
+
+    </div>
+
+    <script>
+        function toggle(id) {
+            var el = document.getElementById(id);
+            var all = document.querySelectorAll('.submenu');
+            for(var i=0; i<all.length; i++) {
+                if(all[i].id !== id) all[i].classList.remove('show');
+            }
+            if(el) el.classList.toggle('show');
+        }
+
+        function update() {
+            var now = new Date();
+            var d = now.getDay(); 
+            var h = now.getHours();
+            
+            var textEl = document.getElementById('status-text');
+            var dotEl = document.querySelector('.dot');
+            
+            var isOpen = false;
+            var label = "Fechado agora";
+            var color = "#e17055";
+
+            if(d >= 1 && d <= 5 && h >= 8 && h < 22) {
+                label = "Academia Aberta";
+                color = "#2ecc71";
+            }
+
+            var rows = document.querySelectorAll('.class-row');
+            for(var i=0; i<rows.length; i++) {
+                var row = rows[i];
+                row.classList.remove('active');
+                
+                var dArr = row.getAttribute('data-d').split(',').map(Number);
+                var hVal = parseInt(row.getAttribute('data-h'));
+
+                if(dArr.includes(d) && hVal === h) {
+                    row.classList.add('active');
+                    var nameSpan = row.querySelectorAll('span')[1];
+                    if(nameSpan) label = "Rolando: " + nameSpan.innerText;
+                    color = "#2ecc71";
+                }
+            }
+
+            if(textEl) {
+                textEl.innerText = label;
+                textEl.style.color = color;
+            }
+            if(dotEl) dotEl.style.backgroundColor = color;
+        }
+
+        update();
+        setInterval(update, 60000);
+    </script>
+</body>
+</html>
